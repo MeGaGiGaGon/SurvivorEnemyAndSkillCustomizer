@@ -63,6 +63,14 @@ namespace SurvivorEnemyAndSkillCustomizer
             new( "canceledFromSprinting",        "bool",              (skill) => skill.canceledFromSprinting.ToString(),        (skill, value) => skill.canceledFromSprinting = bool.Parse(value),        "Whether or not sprinting sets the skill's state to be reset."                                     ),
             new( "isCombatSkill",                "bool",              (skill) => skill.isCombatSkill.ToString(),                (skill, value) => skill.isCombatSkill = bool.Parse(value),                "Whether or not this is considered a combat skill. If true, will stop items like Red Whip on use." ),
             new( "mustKeyPress",                 "bool",              (skill) => skill.mustKeyPress.ToString(),                 (skill, value) => skill.mustKeyPress = bool.Parse(value),                 "The skill can't be activated if the key is held."                                                 )
-        };             
+        };     
+        
+        public static readonly List<string> LunarSkills = new()
+        {
+            "LunarPrimaryReplacement",
+            "LunarSecondaryReplacement",
+            "LunarUtilityReplacement",
+            "LunarSpecialReplacement"
+        };
     }
 }

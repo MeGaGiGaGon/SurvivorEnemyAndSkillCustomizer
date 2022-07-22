@@ -9,6 +9,7 @@ using UnityEngine;
 using static SurvivorEnemyAndSkillCustomizer.ROStuff;
 using System.Linq;
 using R2API.Utils;
+using System.Text.RegularExpressions;
 
 namespace SurvivorEnemyAndSkillCustomizer
 {
@@ -182,7 +183,7 @@ namespace SurvivorEnemyAndSkillCustomizer
 
         public string RemoveIllegalChars(string input)
         {
-            return input.Replace("\n", "").Replace("\t", "").Replace("\\", "").Replace("\"", "").Replace("\'", "").Replace("[", "").Replace("]", "");
+            return Regex.Replace(input, @"[^\w]", "");
         }
 
         public SkillDef GetSkillFromToken(string input)

@@ -21,7 +21,7 @@ namespace SurvivorEnemyAndSkillCustomizer
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "GiGaGon";
         public const string PluginName = "SurvivorEnemyAndSkillCustomizer";
-        public const string PluginVersion = "1.2.0";
+        public const string PluginVersion = "1.3.0";
 
         internal class ModConfig
         {
@@ -86,6 +86,7 @@ namespace SurvivorEnemyAndSkillCustomizer
             foreach (CharacterBody character in BodyCatalog.allBodyPrefabBodyBodyComponents)
             {
                 string name = RemoveIllegalChars(Language.english.GetLocalizedStringByToken(character.baseNameToken));
+                
                 if (name == "") continue;
 
                 ConfigEntry<bool> isEnabled = Config.Bind(name, $"{name} Enable", false, $"If true, {name}'s configs will be generated/values will be changed.");
@@ -96,6 +97,7 @@ namespace SurvivorEnemyAndSkillCustomizer
                     foreach (SkillDef skill in character.GetComponents<GenericSkill>().SelectMany(x => x.skillFamily.variants).Select(x => x.skillDef))
                     {
                         string skName = RemoveIllegalChars(Language.english.GetLocalizedStringByToken(skill.skillNameToken));
+                        
                         if (skName == "") continue;
 
                         ConfigEntry<bool> skEnabled = Config.Bind($"{name}_{skName}", $"{name}_{skName} Enable", false, $"If true, {name}'s skill {skName}'s configs will be generated/values will be changed.");
@@ -131,6 +133,9 @@ namespace SurvivorEnemyAndSkillCustomizer
             foreach (CharacterBody character in characterBodies)
             {
                 string name = RemoveIllegalChars(Language.english.GetLocalizedStringByToken(character.baseNameToken));
+
+                if (name == "") continue;
+
                 if (Config.TryGetEntry(name, $"{name} Enable", out ConfigEntry<bool> enable) && enable.Value)
                 {
                     foreach (var val in SurvivorModifyableValues)
@@ -143,6 +148,9 @@ namespace SurvivorEnemyAndSkillCustomizer
                     foreach (SkillDef skill in character.GetComponents<GenericSkill>().SelectMany(x => x.skillFamily.variants).Select(x => x.skillDef))
                     {
                         string skName = RemoveIllegalChars(Language.english.GetLocalizedStringByToken(skill.skillNameToken));
+
+                        if (skName == "") continue;
+
                         if (Config.TryGetEntry($"{name}_{skName}", $"{name}_{skName} Enable", out ConfigEntry<bool> skEnable) && skEnable.Value)
                         {
                             foreach (var val in SkillModifyableValues)

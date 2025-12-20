@@ -2,14 +2,12 @@ using BepInEx;
 using BepInEx.Configuration;
 using RoR2;
 using RoR2.Skills;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static SurvivorEnemyAndSkillCustomizer.ROStuff;
 using System.Linq;
-using R2API.Utils;
 using System.Text.RegularExpressions;
+using R2API.Utils;
 
 namespace SurvivorEnemyAndSkillCustomizer
 {
@@ -32,14 +30,14 @@ namespace SurvivorEnemyAndSkillCustomizer
             public static void InitConfig(ConfigFile config)
             {
                 reloadKeyBind = config.Bind("_General", "Reload Keybind", new KeyboardShortcut(KeyCode.F8), "Keybind to press to reload the mod's configs.");
-                generateConfigs = config.Bind("_General", "Generate Configs", true, "If disabled, new configs will not be generated. Existing configs will still function normally. Can be used to speed up load times durring testing/playing.");
+                generateConfigs = config.Bind("_General", "Generate Configs", true, "If disabled, new configs will not be generated. Existing configs will still function normally. Can be used to speed up load times during testing/playing.");
                 midRunChanges = config.Bind("_General", "Mid Run Changes", true, "If enabled, the mod will attempt to make the changes mid run.");
             }
         }
         private void Awake()
         {
             ModConfig.InitConfig(Config);
-            On.RoR2.RoR2Application.OnLoad += AfterLoad;
+            RoR2.RoR2Application.onLoad += AfterLoad;
         }
         private void Update()
         {
@@ -51,9 +49,8 @@ namespace SurvivorEnemyAndSkillCustomizer
                 Debug.Log("SurvivorEnemyAndSkillCustomizer - Reloading Finished");
             }
         }
-        private IEnumerator AfterLoad(On.RoR2.RoR2Application.orig_OnLoad orig, RoR2Application self)
+        private void AfterLoad()
         {
-            yield return orig(self);
             Debug.Log("SurvivorEnemyAndSkillCustomizer - Inital Load");
             MakeChanges();
             Debug.Log("SurvivorEnemyAndSkillCustomizer - Loading Finished");
